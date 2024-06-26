@@ -1,12 +1,23 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.9;
 
-contract MyContract {
+contract BuyMeABeerContract {
     uint256 totalBeer;
     address payable public owner;
 
-    constructor() payable {
+    constructor(Item[] memory initialItems) payable {
         owner = payable(msg.sender);
+        for (uint256 i = 0; i < initialItems.length; i++) {
+            items.push(Item({
+                id: nextItemId,
+                name: initialItems[i].name,
+                imageUrl: initialItems[i].imageUrl,
+                price: initialItems[i].price,
+                enabled: initialItems[i].enabled
+            }));
+            emit ItemAdded(nextItemId, initialItems[i].name, initialItems[i].imageUrl, initialItems[i].price, initialItems[i].enabled);
+            nextItemId++;
+        }
     }
 
     event NewBeer(
